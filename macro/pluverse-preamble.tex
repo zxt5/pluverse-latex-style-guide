@@ -170,4 +170,31 @@
 \SetKw{AlgBreak}{break}
 \SetKw{AlgContinue}{continue}
 
+% Anonymize IDs
+\newcounter{myUniqueIdCounter}
 
+\makeatletter
+\newcommand{\myGetOrAssignID}[1]{%
+  \ifcsname myMap@#1\endcsname%
+    % If already defined, return existing ID
+    \csname myMap@#1\endcsname%
+  \else%
+    % If not defined, increment counter and assign
+    \stepcounter{myUniqueIdCounter}%
+    \expandafter\xdef\csname myMap@#1\endcsname{\themyUniqueIdCounter}%
+    \themyUniqueIdCounter%
+  \fi%
+}
+\makeatother
+
+% Example usage:
+%
+% add this line to use anonymized IDs:
+%
+%    \def\useAnonymizedId{}
+
+\newcommand{\anonymizedId}[1]{\ifx\useAnonymizedId\undefined%
+  #1%
+\else%
+  \myGetOrAssignID{#1}%
+\fi}
