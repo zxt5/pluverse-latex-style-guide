@@ -1,6 +1,10 @@
 \documentclass{article}
 
+\usepackage[a4paper, margin=0.5in]{geometry}
+\usepackage{titling}
 \usepackage{hyperref}
+
+\setlength{\droptitle}{-5em}
 
 \input{../macro/pluverse-preamble.tex}
 
@@ -31,6 +35,15 @@ We can reference them again:
 
 The anonymized ids should be consistent.
 \end{tcolorbox}
+
+You can also set it according to the anonymous defined in acmart class:
+\begin{verbatim}
+\makeatletter
+\if@ACM@anonymous
+    \def\useAnonymizedId{}
+\fi
+\makeatother
+\end{verbatim}
 
 You can turn off the anonymization at any time by undefining:
 \begin{verbatim}
