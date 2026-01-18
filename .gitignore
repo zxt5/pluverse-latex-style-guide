@@ -7,3 +7,15 @@ main.log
 main.out
 main.pdf
 main.synctex.gz
+main.fls
+main.fdb_latexmk
+
+template/*.aux
+template/*.bbl
+template/*.blg
+template/*.log
+template/*.out
+template/*.pdf
+template/*.synctex.gz
+template/*.fls
+template/*.fdb_latexmk

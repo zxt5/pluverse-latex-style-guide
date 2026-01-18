@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+
+\input{../macro/pluverse-preamble.tex}
+
+\begin{document}
+
+\title{Anonymized IDs}
+\author{Hongxu Xu}
+
+\maketitle
+
+To anonymize IDs, you should add this line before using \texttt{\textbackslash anonymizedId}:
+\begin{verbatim}
+    \def\useAnonymizedId{}
+    We have ids: \anonymizedId{1234}, \anonymizedId{5678}.
+
+    We can reference them again:
+        \anonymizedId{1234}, \anonymizedId{5678}.
+
+    The anonymized ids should be consistent.
+\end{verbatim}
+
+\begin{tcolorbox}
+\def\useAnonymizedId{}
+We have ids: \anonymizedId{1234}, \anonymizedId{5678}.
+
+We can reference them again:
+    \anonymizedId{1234}, \anonymizedId{5678}.
+
+The anonymized ids should be consistent.
+\end{tcolorbox}
+
+You can turn off the anonymization at any time by undefining:
+\begin{verbatim}
+    \undef\useAnonymizedId
+    We have ids: \anonymizedId{1234}, \anonymizedId{5678}.
+\end{verbatim}
+
+\begin{tcolorbox}
+\undef\useAnonymizedId
+We have ids: \anonymizedId{1234}, \anonymizedId{5678}.
+\end{tcolorbox}
+
+Of course, you can wrap the number with hyperlinks or other commands as needed.
+\begin{verbatim}
+    \newcommand{\issueId}[1]{%
+    \href{https://github.com/llvm/llvm-project/issues/#1}{#1}%
+    }
+
+    \newcommand{\anonymizedIssueId}[1]{%
+
+    \ifx\useAnonymizedId\undefined%
+        \issueId{#1}%
+    \else%
+        \myGetOrAssignID{#1}%
+    \fi}
+
+    \def\useAnonymizedId{}
+    We have ids:
+        \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+    Ref again:
+        \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+
+    \undef\useAnonymizedId
+    We have ids:
+        \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+    Ref again:
+        \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+\end{verbatim}
+
+\newcommand{\issueId}[1]{%
+    \href{https://github.com/llvm/llvm-project/issues/#1}{#1}%
+}
+\newcommand{\anonymizedIssueId}[1]{\ifx\useAnonymizedId\undefined%
+  \issueId{#1}%
+\else%
+  \myGetOrAssignID{#1}%
+\fi}
+
+\begin{tcolorbox}
+\def\useAnonymizedId{}
+We have ids: \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+Ref again: \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+
+\undef\useAnonymizedId
+We have ids: \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+Ref again: \anonymizedIssueId{1234}, \anonymizedIssueId{5678}.
+\end{tcolorbox}
+
+\end{document}
